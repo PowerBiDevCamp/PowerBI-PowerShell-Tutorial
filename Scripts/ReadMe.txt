@@ -1,0 +1,1 @@
+This is the folder where you should create new scripts as you work through the exercises of this lab.
