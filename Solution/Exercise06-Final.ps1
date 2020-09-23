@@ -46,24 +46,26 @@ foreach($datasource in $datasources) {
   # add credentials for SQL datasource
   $sqlUserName = "CptStudent"
   $sqlUserPassword = "pass@word1"
-
+  
   # create HTTP request body to patch datasource credentials
-    $patchBody = @{
-      "credentialDetails" = @{
-        "credentials" = "{""credentialData"":[{""name"":""username"",""value"":""$sqlUserName""},{""name"":""password"",""value"":""$sqlUserPassword""}]}"
-        "credentialType" = "Basic"
-        "encryptedConnection" =  "NotEncrypted"
-        "encryptionAlgorithm" = "None"
-        "privacyLevel" = "Organizational"
-      }
+  $userNameJson = "{""name"":""username"",""value"":""$sqlUserName""}"
+  $passwordJson = "{""name"":""password"",""value"":""$sqlUserPassword""}"
+
+  $patchBody = @{
+    "credentialDetails" = @{
+      "credentials" = "{""credentialData"":[ $userNameJson, $passwordJson ]}"
+      "credentialType" = "Basic"
+      "encryptedConnection" =  "NotEncrypted"
+      "encryptionAlgorithm" = "None"
+      "privacyLevel" = "Organizational"
     }
+  }
 
   # convert body contents to JSON
   $patchBodyJson = ConvertTo-Json -InputObject $patchBody -Depth 6 -Compress
 
   # execute PATCH operation to set datasource credentials
   Invoke-PowerBIRestMethod -Method Patch -Url $datasourePatchUrl -Body $patchBodyJson
-
 }
 
 # parse REST URL for dataset refresh
