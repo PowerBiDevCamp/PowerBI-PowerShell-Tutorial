@@ -1,30 +1,18 @@
 Write-Host
 
-#$user = Connect-PowerBIServiceAccount
+Connect-PowerBIServiceAccount | Out-Null
 
-$newWorkspaceName = "Test Workspace 1"
+$workspaceName = "Dev Camp Labs"
 
-$workspace = Get-PowerBIWorkspace -Name $newWorkspaceName
-
-if($workspace) {
-  Write-Host "The workspace named $newWorkspaceName already exists"
-}
-else {
-  Write-Host "Creating new workspace named $newWorkspaceName"
-  $workspace = New-PowerBIGroup -Name $newWorkspaceName
-}
-
-# determine path to PBIX file
-$pbixFilePath = "C:\DevCamp\PBIX\SalesByState.pbix"
-
-$importName = "Sales Report for Washington"
-$parameterValueState = "WA"
-
-
-$import = New-PowerBIReport -Path $pbixFilePath -WorkspaceId $workspace.Id -Name $importName -ConflictAction CreateOrOverwrite
-
-# get object for target workspace
 $workspace = Get-PowerBIWorkspace -Name $workspaceName
+
+$pbixFilePath = "$PSScriptRoot\SalesByState.pbix"
+
+$importName = "Sales Report for Florida"
+$parameterValueState = "FL"
+
+$import = New-PowerBIReport -Path $pbixFilePath -WorkspaceId $workspace.Id `
+                            -Name $importName -ConflictAction CreateOrOverwrite
 
 # get object for new dataset
 $dataset = Get-PowerBIDataset -WorkspaceId $workspace.Id | Where-Object Name -eq $import.Name
@@ -32,13 +20,15 @@ $dataset = Get-PowerBIDataset -WorkspaceId $workspace.Id | Where-Object Name -eq
 $workspaceId = $workspace.Id
 $datasetId = $dataset.Id
 
-
-# update State parameter for newly-imported dataset
+# create REST URL to update State parameter for newly-imported dataset
 $datasetParametersUrl = "groups/$workspaceId/datasets/$datasetId/Default.UpdateParameters"
 
+# parse together JSON for POST body to update dataset parameters
 $postBody = "{updateDetails:[{name:'State', newValue:'$parameterValueState'}]}"
 
-Invoke-PowerBIRestMethod -Url:$datasetParametersUrl -Method:Post -Body:$postBody -ContentType:'application/json' | ConvertFrom-Json
+# invoke POST operation to update dataset parameters
+Invoke-PowerBIRestMethod -Url:$datasetParametersUrl -Method:Post -Body:$postBody `
+                         -ContentType:'application/json'
 
 # get object for new SQL datasource
 $datasources = Get-PowerBIDatasource -WorkspaceId $workspaceId -DatasetId $datasetId

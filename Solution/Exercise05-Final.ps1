@@ -17,6 +17,7 @@ Write-Host
 
 foreach($datasource in $datasources) {
   
+  # parse together REST URL to reference datasource to be patched
   $gatewayId = $datasource.gatewayId
   $datasourceId = $datasource.datasourceId
   $datasourePatchUrl = "gateways/$gatewayId/datasources/$datasourceId"

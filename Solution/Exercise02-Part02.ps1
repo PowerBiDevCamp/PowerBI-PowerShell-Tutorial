@@ -11,7 +11,7 @@ $credential = New-Object -TypeName System.Management.Automation.PSCredential `
 
 # log into Power BI unattended without any user interaction
 
-$user = Connect-PowerBIServiceAccount
+$user = Connect-PowerBIServiceAccount -Credential $credential
 
 $userName = $user.UserName
 
