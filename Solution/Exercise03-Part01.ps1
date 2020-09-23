@@ -1,7 +1,9 @@
 Write-Host
 
-$user = Connect-PowerBIServiceAccount
+Connect-PowerBIServiceAccount | Out-Null
 
-$newWorkspaceName = "Test Workspace 1"
+$workspaceName = "Dev Camp Labs"
 
-$workspace = New-PowerBIGroup -Name $newWorkspaceName
+$workspace = New-PowerBIGroup -Name $workspaceName
+
+$workspace | select *

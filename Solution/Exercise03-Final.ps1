@@ -1,20 +1,20 @@
 Write-Host
 
-$user = Connect-PowerBIServiceAccount
+Connect-PowerBIServiceAccount | Out-Null
 
-$newWorkspaceName = "Test Workspace 1"
+$workspaceName = "Dev Camp Labs"
 
-$workspace = Get-PowerBIWorkspace -Name $newWorkspaceName
+$workspace = Get-PowerBIWorkspace -Name $workspaceName
 
 if($workspace) {
-  Write-Host "The workspace named $newWorkspaceName already exists"
+  Write-Host "The workspace named $workspaceName already exists"
 }
 else {
-  Write-Host "Creating new workspace named $newWorkspaceName"
-  $workspace = New-PowerBIGroup -Name $newWorkspaceName
+  Write-Host "Creating new workspace named $workspaceName"
+  $workspace = New-PowerBIGroup -Name $workspaceName
 }
 
 # add user as workspace member
-$userEmail = "JamesB@powerbidevcamp.net"
+$userEmail = "JamesB@pbidev0924.onMicrosoft.com"
 
 Add-PowerBIWorkspaceUser -Id $workspace.Id -UserEmailAddress $userEmail -AccessRight Contributor

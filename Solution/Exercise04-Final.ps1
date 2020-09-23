@@ -1,22 +1,21 @@
 Write-Host
 
-#$user = Connect-PowerBIServiceAccount
+Connect-PowerBIServiceAccount | Out-Null
 
-$newWorkspaceName = "Test Workspace 1"
+$workspaceName = "Dev Camp Labs"
 
-$workspace = Get-PowerBIWorkspace -Name $newWorkspaceName
+$workspace = Get-PowerBIWorkspace -Name $workspaceName
 
 if($workspace) {
-  Write-Host "The workspace named $newWorkspaceName already exists"
+  Write-Host "The workspace named $workspaceName already exists"
 }
 else {
-  Write-Host "Creating new workspace named $newWorkspaceName"
-  $workspace = New-PowerBIGroup -Name $newWorkspaceName
+  Write-Host "Creating new workspace named $workspaceName"
+  $workspace = New-PowerBIGroup -Name $workspaceName
 }
 
-# determine path to PBIX file
-$pbixFilePath = "C:\DevCamp\PBIX\COVID-US.pbix"
+$pbixFilePath = "$PSScriptRoot\COVID-US.pbix"
 
-$import = New-PowerBIReport -Path $pbixFilePath -Workspace $workspace
+$import = New-PowerBIReport -Path $pbixFilePath -Workspace $workspace -ConflictAction CreateOrOverwrite
 
 $import | select *

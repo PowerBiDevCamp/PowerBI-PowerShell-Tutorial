@@ -5,7 +5,7 @@ Connect-PowerBIServiceAccount | Out-Null
 $workspaceName = "Dev Camp Labs"
 $datasetName = "COVID-US"
 
-$workspace = Get-PowerBIWorkspace -Name $newWorkspaceName
+$workspace = Get-PowerBIWorkspace -Name $workspaceName
 
 $dataset = Get-PowerBIDataset -WorkspaceId $workspace.Id | Where-Object Name -eq $datasetName
 
