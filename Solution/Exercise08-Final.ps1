@@ -1,7 +1,7 @@
 ﻿Clear-Host
+Write-Host
 
 Connect-PowerBIServiceAccount | Out-Null
-
 
 function ExportDailyActivity($date) {
   
@@ -14,17 +14,22 @@ function ExportDailyActivity($date) {
   $outputFile = "$PSScriptRoot/logs/ActivityEventsLog-$dateString.csv"
 
   Write-Host "Getting actvities for $dateString"
-  $events = Get-PowerBIActivityEvent -StartDateTime $start -EndDateTime $end -ResultType JsonString | ConvertFrom-Json
+  $events = Get-PowerBIActivityEvent -StartDateTime $start -EndDateTime $end `
+                                     -ResultType JsonString | ConvertFrom-Json
 
   if($events){
-    Write-Host "Export events to $outputFile"
+    Write-Host " - Exporting events to $outputFile"
     $events | Export-Csv -Path $outputFile -NoTypeInformation
+  }
+  else {
+    Write-Host " - There was no activity on $dateString"
   }
 }
 
-$DaysBack = 4
+$DaysBack = 3
+$DateRange = $DaysBack..0
 
-foreach($dayOffset in $DaysBack..1) {
-   $day = (((Get-Date).Date).AddDays(-$dayOffset))
-   ExportDailyActivity $day
+foreach($dayOffset in $DateRange) {
+  $day = (((Get-Date).Date).AddDays(-$dayOffset))
+  ExportDailyActivity $day
 }
