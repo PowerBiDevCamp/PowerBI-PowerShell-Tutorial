@@ -16,3 +16,4 @@ foreach($pet in $pets) {
 }
 
 notepad.exe $outputFilePath
+
