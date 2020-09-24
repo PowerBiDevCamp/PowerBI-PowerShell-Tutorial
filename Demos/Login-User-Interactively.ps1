@@ -1,5 +1,5 @@
 # log into Power BI interactively as script begins to run
-$user = Connect-PowerBIServiceAccount $credential
+$user = Connect-PowerBIServiceAccount
 
 $userName = $user.UserName
 
