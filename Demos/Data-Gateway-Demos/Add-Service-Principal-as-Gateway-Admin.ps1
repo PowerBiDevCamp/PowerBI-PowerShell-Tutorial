@@ -1,3 +1,6 @@
+# requires PowerShell Core - this script will not work on PowerShell 5
+# requires installiing DataGateway PowerShell module: Install-Module -Name DataGateway 
+
 # login as user with admn permissions on gateway
 Connect-DataGatewayServiceAccount -Environment Public
 

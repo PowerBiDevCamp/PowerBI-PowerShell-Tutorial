@@ -1,8 +1,13 @@
-
+# requires PowerShell Core - this script will not work on PowerShell 5
+# requires installiing DataGateway PowerShell module: Install-Module -Name DataGateway 
 # this script assume tenant only has a single gateway (aka gateway cluster)
-$gateway = Get-DataGatewayCluster 
 
-Write-Host "Found gateway named "$gateway.Name
+Connect-DataGatewayServiceAccount
+
+$gateway = Get-DataGatewayCluster 
+$gatewayName = $gateway.Name
+
+Write-Host "Found data gateway named $gatewayName"
 Write-Host 
 
 $datasources = Get-DataGatewayClusterDatasource -GatewayClusterId $gateway.Id
