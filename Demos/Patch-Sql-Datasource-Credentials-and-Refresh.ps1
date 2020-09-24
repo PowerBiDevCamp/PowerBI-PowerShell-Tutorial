@@ -4,7 +4,7 @@ Connect-PowerBIServiceAccount | Out-Null
 
 $workspaceName = "Dev Camp Labs"
 
-$workspace = Get-PowerBIWorkspace -Name $newWorkspaceName
+$workspace = Get-PowerBIWorkspace -Name $workspaceName
 
 $pbixFilePath = "$PSScriptRoot\SalesByState.pbix"
 

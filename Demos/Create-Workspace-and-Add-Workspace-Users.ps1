@@ -2,7 +2,7 @@ Write-Host
 
 Connect-PowerBIServiceAccount | Out-Null
 
-$workspaceName = "Dev Camp Labs"
+$workspaceName = "Dev Camp Demos"
 
 $workspace = Get-PowerBIWorkspace -Name $workspaceName
 
