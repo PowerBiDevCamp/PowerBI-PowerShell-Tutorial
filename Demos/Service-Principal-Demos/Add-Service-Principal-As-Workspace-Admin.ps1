@@ -1,6 +1,6 @@
-# Connect-PowerBIServiceAccount 
+Connect-PowerBIServiceAccount | Out-Null
 
-$workspaceName = "Dev Camp Demos 3"
+$workspaceName = "Dev Camp Labs"
 
 $servicePrincipalId = "c4143c3d-e853-42c5-a0ee-3eceac680305"
 

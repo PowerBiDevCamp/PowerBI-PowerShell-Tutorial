@@ -1,5 +1,7 @@
+Connect-PowerBIServiceAccount | Out-Null
+
 # modify name of target workspace if needed
-$workspaceName = "Bob"
+$workspaceName = "Dev Camp Labs"
 
 # modify name and path of model.json file if needed
 $DataflowImportFileName = "$PSScriptRoot\model.json"
