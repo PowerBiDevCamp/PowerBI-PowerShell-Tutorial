@@ -1,4 +1,4 @@
-Clear-Host
+$outputFilePath = "$PSScriptRoot/Pets.txt"
 
 $pets = @(
   @{ Name="Bob"; Type="Cat" }
@@ -7,13 +7,12 @@ $pets = @(
   @{ Name="Penny"; Type="Porcupine" }
 )
 
-Write-Host 
-Write-Host "My Pets"
+"My Pets" | Out-File $outputFilePath
 
 foreach($pet in $pets) {
   $name = $pet.Name
   $type = $pet.Type
-  Write-Host " - $name the $type"
+  " - $name the $type" | Out-File $outputFilePath -Append
 }
 
-Write-Host
+notepad.exe $outputFilePath
