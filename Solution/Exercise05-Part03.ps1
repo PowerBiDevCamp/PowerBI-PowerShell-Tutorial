@@ -39,5 +39,4 @@ foreach($datasource in $datasources) {
 
   # execute PATCH operation to set datasource credentials
   Invoke-PowerBIRestMethod -Method Patch -Url $datasourePatchUrl -Body $patchBodyJson
-
 }
